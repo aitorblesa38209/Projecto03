@@ -4,18 +4,10 @@ if(empty($_SESSION['login_user'])){
     //en caso afirmativo, redirige a index para login
     header('location: index.php');
   }
-
-
-
-//conexión a la base de datos o mensaje en caso de error
+//conexión a la base de datos
 $conexion = mysqli_connect('localhost','root','','bd_botiga_reserva_mejora');
-
 //Sentencia para mostrar todos los materiales de la tabla tbl_material
-$sql = "SELECT nom_usuari, email_usuari, tipus_usuari FROM tbl_usuaris";
-
-
-//comprobación si está instanciada la variable opciones (viene de un select de filtrado en el formulario de cabecera)
-
+$sql = "SELECT tbl_usuaris.nom_usuari, tbl_usuaris.email_usuari, tbl_tipo_usuari.tipus_usuari FROM tbl_usuaris INNER JOIN tbl_tipo_usuari ON tbl_tipo_usuari.id_tipo_usuari = tbl_usuaris.id_tipo_usuari";
 ?>
 <!--INICIO WEB -->
 <!DOCTYPE html>
@@ -25,6 +17,7 @@ $sql = "SELECT nom_usuari, email_usuari, tipus_usuari FROM tbl_usuaris";
       <meta lang="es">
       <meta charset="utf-8">
       <link rel="stylesheet" type="text/css" href="css/estilo.css"/>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
   </head>
     <body>
 
@@ -65,50 +58,36 @@ $sql = "SELECT nom_usuari, email_usuari, tipus_usuari FROM tbl_usuaris";
             <!-- PARTE DONDE SE VA A MOSTRAR LA INFORMACIÓN -->
              <h1 class="titulo">Administrar Usuarios</h1>
             <?php
+            //echo $sql;
             //consulta de datos según el filtrado
               $datos = mysqli_query($conexion,$sql);
-              //si se devuelve un valor diferente a 0 (hay datos)
-              if(mysqli_num_rows($datos)!=0){
+              ?>
+
+              <table border bordercolor=black>
+              <tr>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Tipo</th>
+                <th>Operaciones</th>
+              </tr>
+              <?php
+           
+              
                 while ($mostrar = mysqli_fetch_array($datos)) {
+                    echo "<tr><td>";
+                    echo "$mostrar[nom_usuari]";
+                    echo "</td><td>$mostrar[email_usuari]</td>";
+                    echo "</td><td>$mostrar[tipus_usuari]</td>";
+                    echo "<td><i style='color: white;' class='fa fa-pencil fa-2x fa-pull-left fa-border' title='modificar'></i>
+                              <i style='color: white;' class='fa fa-trash fa-2x fa-pull-left fa-border' title='borrar'></i>";
+                    echo "</td></tr>";
+
+                }
             ?>
             <br/>
-            <div id="divMaterialReserva">
-
-                <table>
-                  <tr>
-                    <th>Email Usuario</th>
-                    <th>Nombre Usuario</th>
-                    <th>Tipo Usuario</th>
-                    
-                  </tr>
-      
-                  <tr class="estilotabla">
-
-                    <td><?php echo $mostrar['email_usuari'];  ?></td>
-                    <td><?php echo utf8_encode($mostrar['nom_usuari']); ?></td>
-                    <td><?php echo utf8_encode($mostrar['tipus_usuari']); ?></td>
-                  
-                    
-                 
-                  </tr>
-                </table>
+            </table>
             </div>
-            <?php
-            }
-          }else{
-            ?>
-            <br/>
-            <div>
-                <table>
-                  <tr>
-                    <th>
-                    <p><img src="img/info.png" id="info" alt="info" title="info" /> NO HAY DATOS QUE MOSTRAR </p>
-                    </th>
-                  </tr>
-                </table>
-            </div><?php
-              }
-            ?>
+           
         	</section>
         </main>
     </body>

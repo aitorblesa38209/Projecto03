@@ -60,7 +60,7 @@ $conexion = mysqli_connect('localhost','root','','bd_botiga_reserva_mejora') or 
             <?php
             $sql = "SELECT * FROM tbl_material
                              INNER JOIN tbl_reservas ON tbl_reservas.id_material = tbl_material.id_material
-                            WHERE tbl_reservas.id_usuari = $_SESSION[login_user]";
+                             WHERE tbl_reservas.id_usuari = $_SESSION[login_user]";
             
             //consulta de datos según el filtrado
             $datos = mysqli_query($conexion,$sql);
@@ -68,10 +68,12 @@ $conexion = mysqli_connect('localhost','root','','bd_botiga_reserva_mejora') or 
                     while ($mostrar = mysqli_fetch_array($datos)) { 
                         echo "<br/><b class='negrita'>Nombre de la aula: </b>".utf8_encode($mostrar['nombre_material'])."";
                         echo "<br/><img src='img/material/".$mostrar['id_material'].".jpg'/><br/><br/>";
-                        echo "<a class='clasedeA' href='productosliberar.php?$mostrar[disponible]& id_material=$mostrar[id_material]'> Liberar </a>    <br/>";
-                        echo "<hr><br/>";
+                        echo "<a class='form2' href='productosliberar.php?$mostrar[disponible]& id_material=$mostrar[id_material]'> Liberar </a>    <br/>";
+                        echo "<br/><hr><br/>";
                     }
 
+                }else{
+                  echo"<img src='img/info.png' id='info' alt='info' title='info' /> TODAVÍA NO HAS RESERVADO NADA!";
                 }
                    
             ?>
