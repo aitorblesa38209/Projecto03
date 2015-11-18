@@ -13,7 +13,7 @@ $sql = "SELECT * FROM tbl_usuaris WHERE id_usuari=$_REQUEST[id_usuari]";
 <!DOCTYPE html>
 <html>
   <head>
-      <title>Oxford Intranet</title>
+      <title>Modificar Usuario</title>
       <meta lang="es">
       <meta charset="utf-8">
       <link rel="stylesheet" type="text/css" href="css/estilo.css"/>
