@@ -7,7 +7,7 @@ if(empty($_SESSION['login_user'])){
 
 
 //se realiza la conexión a la base de datos
-$con = mysqli_connect('localhost','root','','bd_botiga_reserva_mejora') or die ('No se ha podido conectar'. mysql_error());
+$con = mysqli_connect('localhost','root','','bd_botiga_reserva_mejora');
 
 if ($_REQUEST['disponibilidad']==0){
   //consulta de inserción

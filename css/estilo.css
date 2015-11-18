@@ -1,6 +1,6 @@
 *{
-  padding: 0;
-  margin: 0;;;;
+  margin: 0;
+  padding: 0;;;;
 }
 
 body{
@@ -9,9 +9,14 @@ background: -webkit-linear-gradient(top left, #50A3f2 0%, #50A3f2 100%);
 }
 
 a{
-	color: white;
 	text-decoration: none;
+	color: white;
 }
+.clasedeA{
+	text-decoration: none;
+	color: blue;
+}
+
 
 /* BARRA NEGRA LOGIN */
 
@@ -125,7 +130,15 @@ a{
 	}
 
 	/* FORMULARIO */
-		
+	.formulario{
+		width: 50%;
+		color: black;
+		border-radius: 3px;
+		background-color: rgba(255, 254, 254, 0.32);
+		font-size: 18px;
+		margin-left: 23%;
+		padding-left: 3%;
+	}
 
 		#headerCentro{
 			margin: 0 auto;
@@ -158,9 +171,9 @@ a{
 		}
 
 		form p{
-				color: white;
 				font-size: 20px;
 				margin-bottom: 10px;
+				
 		}
 
 		.user, .pass{
@@ -323,12 +336,12 @@ a{
 		background-color: rgba(255, 255, 255, 0.2);
 		border-radius: 3px;
 		padding: 10px 15px;
-		margin: 0 auto 10px auto;
 		text-align: center;
 		color: white;
 		-webkit-transition-duration: 0.25s;
 		transition-duration: 0.25s;
 		font-weight: 300;
+		margin: 0 auto 10px auto;
 		}
 
 	form input:focus.formul{
@@ -370,4 +383,20 @@ a{
 
 	.estilotabla{
 		text-align:center;
+	}
+	.negrita{
+	font-weight: bold;
+	}
+	.centrado{
+	    color: black;
+	    border-radius: 3px;
+	    background-color: rgba(255, 254, 254, 0.32);
+	    font-size: 18px;
+	    margin-left: auto;
+	    margin-right: auto;
+	    width: auto;
+	    padding: 10px;
+	    display: table;
+	    margin-top: 20%;
+	    text-align: center;
 	}

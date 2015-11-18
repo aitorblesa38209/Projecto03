@@ -8,7 +8,7 @@ if(empty($_SESSION['login_user'])){
 
 
 //conexión a la base de datos o mensaje en caso de error
-$conexion = mysqli_connect('localhost','root','','bd_botiga_reserva_mejora') or die ('No se ha podido conectar'. mysql_error());
+$conexion = mysqli_connect('localhost','root','','bd_botiga_reserva_mejora');
 
 //Sentencia para mostrar todos los materiales de la tabla tbl_material
 $sql = "SELECT nom_usuari, email_usuari, tipus_usuari FROM tbl_usuaris";
@@ -48,7 +48,7 @@ $sql = "SELECT nom_usuari, email_usuari, tipus_usuari FROM tbl_usuaris";
           <nav>
             <ul>
               <a href="productos.php"><li>INICIO</li></a>
-              <li>RESERVAS</li>
+              <a href="mis_reservas.php"><li>RESERVAS</li></a>
               <li>USUARIOS</li>
             </ul>
           </nav>
@@ -56,8 +56,8 @@ $sql = "SELECT nom_usuari, email_usuari, tipus_usuari FROM tbl_usuaris";
       </header>
       <div id="barraNegraDatos">
          <div id="barraOpciones">
-
-          
+            <form action="" method="get">
+            <input type="submit" name="name" class="form2" value="Añadir Usuario">
          </div>
       </div>
         <main>

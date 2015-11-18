@@ -4,9 +4,6 @@ if(empty($_SESSION['login_user'])){
     //en caso afirmativo, redirige a index para login
     header('location: index.php');
   }
-
-
-
 //conexión a la base de datos o mensaje en caso de error
 $conexion = mysqli_connect('localhost','root','','bd_botiga_reserva_mejora') or die ('No se ha podido conectar'. mysql_error());
 
@@ -16,7 +13,6 @@ $sql = "SELECT DISTINCT tbl_reservas.id_reserva, tbl_reservas.id_material, tbl_u
         INNER JOIN tbl_usuaris on tbl_usuaris.id_usuari = tbl_reservas.id_usuari
         INNER JOIN tbl_material on tbl_material.id_material = tbl_reservas.id_material
         INNER JOIN tbl_tipo_material on tbl_material.id_tipo_material = tbl_material.id_tipo_material";
-
 
 //comprobación si está instanciada la variable opciones (viene de un select de filtrado en el formulario de cabecera)
 if(isset($_REQUEST['opciones'])){
@@ -33,13 +29,13 @@ if(isset($_REQUEST['devuelto'])){
   }
 
 $sql .= " ORDER BY tbl_reservas.hora_entrada DESC";
-
 ?>
+
 <!--INICIO WEB -->
 <!DOCTYPE html>
 <html>
   <head>
-      <title>Oxford Intranet</title>
+      
       <meta lang="es">
       <meta charset="utf-8">
       <link rel="stylesheet" type="text/css" href="css/estilo.css"/>
@@ -67,7 +63,7 @@ $sql .= " ORDER BY tbl_reservas.hora_entrada DESC";
             <ul>
               <a href="productos.php"><li>INICIO</li></a>
               <li>RESERVAS</li>
-              <li>USUARIOS</li>
+               <a href="usuarios.php"><li>USUARIOS</li></a>
             </ul>
           </nav>
         </section>
@@ -82,7 +78,7 @@ $sql .= " ORDER BY tbl_reservas.hora_entrada DESC";
                
                <?php
                   //Rellenar datos del SELECT con los datos de la base de datos
-                  $sqlTipo = "SELECT * FROM tbl_tipo_material";
+                  $sqlTipo = "SELECT * FROM tbl_tipo_material ";
                   //consulta del select
                   $query = mysqli_query($conexion,$sqlTipo);
                   //mientras por cada dato en el array $query
@@ -102,60 +98,14 @@ $sql .= " ORDER BY tbl_reservas.hora_entrada DESC";
          </div>
       </div>
         <main>
-        	<section>
+        	<section class="formulario">
             <!-- PARTE DONDE SE VA A MOSTRAR LA INFORMACIÓN -->
-             <h1 class="titulo">Mis reservas</h1>
+             <h1 class="titulo">Mis Reservas</h1>
             <?php
+            $sql2 = "SELECT * FROM tbl_material, tbl_usuaris WHERE tbl_usuaris.id_usuari = $_SESSION[login_user]";
             //consulta de datos según el filtrado
               $datos = mysqli_query($conexion,$sql);
-              //si se devuelve un valor diferente a 0 (hay datos)
-              if(mysqli_num_rows($datos)!=0){
-                while ($mostrar = mysqli_fetch_array($datos)) {
-            ?>
-            <br/>
-            <div id="divMaterialReserva">
-
-                <table>
-                  <tr>
-                    <td>Id Reserva</td>
-                    <td>Descripción</td>
-                    <td>Reservado</td>
-                    <td>Devuelto</td>
-                    <td>Disponible</td>
-                    <td>Usuario</td>
-                  </tr>
-                  <tr>
-
-                    <td style="width:80px"><?php echo $mostrar['id_reserva'];  ?></td>
-                    <td style="width:207px"><?php echo utf8_encode($mostrar['nombre_material']); ?></td>
-                    <td style="width:207px"><?php echo $mostrar['hora_entrada']; ?></td>
-                    <td style="width:207px"><?php echo $mostrar['hora_salida']; ?></td>
-                    <td style="text-align:center;"><?php
-                      if(!$mostrar['disponible']){
-                        echo "<img src='img/ok.png' alt='Ok' title='Ok' />";
-                      }else {
-                        echo "<img src='img/ko.png' alt='Ko' title='Ko' />";
-                      }
-                    ?></td>
-                    <td><?php echo $mostrar['email_usuari']; ?></td>
-                  </tr>
-                </table>
-            </div>
-            <?php
-            }
-          }else{
-            ?>
-            <br/>
-            <div>
-                <table>
-                  <tr>
-                    <th>
-                    <p><img src="img/info.png" id="info" alt="info" title="info" /> NO HAY DATOS QUE MOSTRAR </p>
-                    </th>
-                  </tr>
-                </table>
-            </div><?php
-              }
+              
             ?>
         	</section>
         </main>

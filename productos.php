@@ -11,9 +11,14 @@ if(empty($_SESSION['login_user'])){
 $conexion = mysqli_connect('localhost','root','','bd_botiga_reserva_mejora') or die ('No se ha podido conectar'. mysql_error());
 
 //Sentencia para mostrar todos los materiales de la tabla tbl_material
-$sql = "SELECT *
-        FROM tbl_material
-        INNER JOIN tbl_tipo_material ON tbl_tipo_material.id_tipo_material = tbl_material.id_tipo_material";
+$sql = "SELECT tbl_material.id_material, tbl_material.nombre_material, tbl_material.id_tipo_material, tbl_material.disponible, tbl_material.incidencia
+        FROM tbl_material";
+
+        //relacion de todas las tablas
+        // INNER JOIN tbl_tipo_material ON tbl_tipo_material.id_tipo_material = tbl_tipo_material.id_tipo_material
+        // INNER JOIN tbl_reservas ON tbl_reservas.id_material = tbl_material.id_material
+        // INNER JOIN tbl_usuari ON tbl_usuari.id_usuari = tbl_reservas.id_usuari
+        // INNER JOIN tbl_tipo_usuari ON tbl_tipo_usuari.id_tipo_usuari = tbl_usuari.id_tipo_usuari";
      
 
 //comprobación si está instanciada la variable opciones (viene de un select de filtrado en el formulario de cabecera)
@@ -57,7 +62,7 @@ if(isset($_REQUEST['opciones'])){
             <ul>
               <li>INICIO</li>
               <a href="mis_reservas.php"><li>RESERVAS</li></a>
-              <a href="usuarios.php"><li>USUARIOS</li>
+              <a href="usuarios.php"><li>USUARIOS</li></a>
             </ul>
           </nav>
         </section>
@@ -86,68 +91,36 @@ if(isset($_REQUEST['opciones'])){
            </form>
          </div>
       </div>
-       
-        	<section>
-          <h1 class="titulo">Listado de Productos</h1>
+       <h1 class="titulo">Listado de Productos</h1>
+        	<section class="formulario">
+          
             <!-- PARTE DONDE SE VA A MOSTRAR LA INFORMACIÓN -->
             <?php
             //consulta de datos según el filtrado
-              $datos = mysqli_query($conexion,$sql);
-              //si se devuelve un valor diferente a 0 (hay datos)
-              if(mysqli_num_rows($datos)!=0){
-                while ($mostrar = mysqli_fetch_array($datos)) {
-            ?>
-
-              <div id="divMaterial"><br/>
-                <form id="formMaterial" action="productosproc.php" method="get">
-                  <div id="formQuery">
-                    <div id="formQueryFoto">
-                      <p><img class ="fotoMini" src="img/material/<?php echo $mostrar['id_material']; ?>.jpg" alt="" title"" /></p>
-                    </div>
-                    <div id="formQueryTexto">
-                      <p id="formTituloMaterial"><?php echo utf8_encode($mostrar['nombre_material']); ?><p>
-                      <p>Disponibilidad: <?php
+                $datos = mysqli_query($conexion,$sql);
+                //si se devuelve un valor diferente a 0 (hay datos)
+                if(mysqli_num_rows($datos)!=0){
+                    while ($mostrar = mysqli_fetch_array($datos)) {   
+                        echo "<br/><b class='negrita'>Nombre de la aula: </b>".utf8_encode($mostrar['nombre_material'])."";
+                        echo "<br/><b class='negrita'>Disponibilidad:" ."</b>";
+                   
                         if(!$mostrar['disponible']){
-                          echo "<img src='img/ok.png' alt='Ok' title='Ok' />";
-                        }else {
-                          echo "<img src='img/ko.png' alt='Ko' title='Ko' />";
-                        }
-                      ?><p>
-                      <p>Incidencia:<?php
-                        if($mostrar['incidencia']){
-                          echo "Si";
-                        }else {
-                          echo "No";
-                        }
-                      ?><p>
-                     
-                    <!-- campo oculto para enviar el id_material -->
-                      <input type="hidden" name="disponibilidad" value="<?php echo $mostrar['disponible']; ?>">
-                      <input type="hidden" name="material" value="<?php echo $mostrar['id_material']; ?>">
-                      <!-- Se comprueba el valor de disponible y se asigna un texto al botón -->
-                      <input type="submit" id="reservar" name="reservar" value=<?php
-                        if(!$mostrar['disponible']){
-                          echo "Reservar";
-                        }else {
-                          echo "Devolver";
-                        }
-                        ?>>
-                     
-                    </div>
-
-                  </div><br/>
-
-                </form>
-
-              </div><br/>
-
-            <?php
+                                echo "<img src='img/ok.png' alt='Ok' title='Ok' />";
+                                echo "<br/><img src='img/material/".$mostrar['id_material'].".jpg'/><br/><br/>";
+                                 echo "<a class='clasedeA' href='productosproc.php?disponible=$mostrar[disponible]& id_material=$mostrar[id_material]'> Reservar </a><br/>";
+                            }else {
+                              echo "<img src='img/ko.png' alt='Ko' title='Ko' />";
+                              echo "<br/><img src='img/material/".$mostrar['id_material'].".jpg'/><br/><br/>";
+                            } 
+                             
+                             //pasamos el tipo disponible e id_material para insertar el producto en la tabla reservas
+                            
+                             echo "<hr><br/>";
+                    }
                 }
-              }else{
-                echo "No hay datos";
-              }
             ?>
 
+        <br/>                
         <footer>
             <a href="#top"><img src="img/top.png" alt="Subir" title="Subir"/></a>
         </footer>
