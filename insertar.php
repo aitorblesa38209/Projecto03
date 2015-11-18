@@ -13,7 +13,7 @@ if(empty($_SESSION['login_user'])){
       <meta lang="es">
       <meta charset="utf-8">
       <link rel="stylesheet" type="text/css" href="css/estilo.css"/>
-     
+     	<script src="js/contraseña.js"></script>
   </head>
     <body>
 
@@ -59,12 +59,14 @@ if(empty($_SESSION['login_user'])){
 	                  //mientras por cada dato en el array $query
 	                 
 				?>
-				<form action="insertarproc.php" method="POST"><br/>
+				<form action="insertarproc.php" onSubmit="return comprobarClave()" name="f1" method="POST"><br/>
 					Nombre:<input type="text" name="nombre" size="20" maxlength="25" required><br/>
 
 					Email:&nbsp;&nbsp;&nbsp;<input type="text" name="email" size="20" maxlength="30" required><br/>
 
 					Contraseña:<input type="password" name="pass" size="20" maxlength="30" required><br/>
+
+					Repetir Contraseña:<input type="password" name="pass2" size="20" maxlength="30" required><br/>
 
 					Tipo Usuario:<select name="tipo" class="formul">
 		               <?php
@@ -75,7 +77,7 @@ if(empty($_SESSION['login_user'])){
 		                ?>
 		            </select>
 		            <br/>
-					<input type="submit" class="form2" value="Enviar">
+					<input type="submit" class="form2"  onClick="comprobarClave()" value="Enviar">
 				</form>
         	</section>
         </main>
