@@ -395,3 +395,20 @@ nav h1{
 .negrita{
 	font-weight: bold;
 }
+#barraLogin {
+    margin: 0 auto;
+    position: relative;
+    width: 999px;
+  }
+
+  #listaLogin{
+    float: right;
+    padding-top: 5px;
+    text-decoration: none;
+  }
+  .username{
+  text-align: right;
+  color: white;
+  
+  margin-right: 10px;
+  }

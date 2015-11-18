@@ -6,29 +6,6 @@ if(empty($_SESSION['login_user'])){
   }
 //conexión a la base de datos o mensaje en caso de error
 $conexion = mysqli_connect('localhost','root','','bd_botiga_reserva_mejora') or die ('No se ha podido conectar'. mysql_error());
-
-//Sentencia para mostrar todos los materiales de la tabla tbl_material
-$sql = "SELECT DISTINCT tbl_reservas.id_reserva, tbl_reservas.id_material, tbl_usuaris.email_usuari, tbl_reservas.hora_entrada, tbl_reservas.hora_salida, tbl_reservas.id_material, tbl_material.nombre_material, tbl_material.disponible
-        FROM tbl_reservas
-        INNER JOIN tbl_usuaris on tbl_usuaris.id_usuari = tbl_reservas.id_usuari
-        INNER JOIN tbl_material on tbl_material.id_material = tbl_reservas.id_material
-        INNER JOIN tbl_tipo_material on tbl_material.id_tipo_material = tbl_material.id_tipo_material";
-
-//comprobación si está instanciada la variable opciones (viene de un select de filtrado en el formulario de cabecera)
-if(isset($_REQUEST['opciones'])){
-  //si los valores son mayores de 0,
-  if ($_REQUEST['opciones']>0) {
-    //se añadirá a la consulta según: 0 - Aulas, 1 - Material informático
-    $sql .= " WHERE tbl_material.id_tipo_material =".$_REQUEST['opciones'];
-  }
-}
-
-//consulta para filtrado de reservado o devuelto
-if(isset($_REQUEST['devuelto'])){
-    $sql .= " AND tbl_material.disponible =".$_REQUEST['devuelto'];
-  }
-
-$sql .= " ORDER BY tbl_reservas.hora_entrada DESC";
 ?>
 
 <!--INICIO WEB -->
@@ -72,40 +49,31 @@ $sql .= " ORDER BY tbl_reservas.hora_entrada DESC";
          <div id="barraOpciones">
 
            <!-- FORMULARIO SELECT PARA FILTRAR EL CONTENIDO -->
-           <form action="mis_reservas.php" method="get">
-             <select name="opciones" class="formul">
-               <option value="" disabled selected>Filtrar por...</option>
-               
-               <?php
-                  //Rellenar datos del SELECT con los datos de la base de datos
-                  $sqlTipo = "SELECT * FROM tbl_tipo_material ";
-                  //consulta del select
-                  $query = mysqli_query($conexion,$sqlTipo);
-                  //mientras por cada dato en el array $query
-                  while ($mostrarOpciones = mysqli_fetch_array($query)) {
-                  //crea una opción en el dato extraido de la base de datos
-                  echo "<option value='$mostrarOpciones[id_tipo_material]'>$mostrarOpciones[tipo]</option>";
-                  }
-                ?>
-              </select>
-              <select name="devuelto" class="formul">
-               <option value="" disabled selected>Filtrar por...</option>
-                <option value="0">Devuelto</option>
-                <option value="1">Reservado</option>
-              </select>
-              <input type="submit" name="name" class="form2" value="Mostrar">
-           </form>
+           
          </div>
       </div>
         <main>
+        <h1 class="titulo">Mis Reservas</h1>
         	<section class="formulario">
             <!-- PARTE DONDE SE VA A MOSTRAR LA INFORMACIÓN -->
-             <h1 class="titulo">Mis Reservas</h1>
+             
             <?php
-            $sql2 = "SELECT * FROM tbl_material, tbl_usuaris WHERE tbl_usuaris.id_usuari = $_SESSION[login_user]";
+            $sql = "SELECT * FROM tbl_material
+                             INNER JOIN tbl_reservas ON tbl_reservas.id_material = tbl_material.id_material
+                            WHERE tbl_reservas.id_usuari = $_SESSION[login_user]";
+            
             //consulta de datos según el filtrado
-              $datos = mysqli_query($conexion,$sql);
-              
+            $datos = mysqli_query($conexion,$sql);
+              if(mysqli_num_rows($datos)!=0){
+                    while ($mostrar = mysqli_fetch_array($datos)) { 
+                        echo "<br/><b class='negrita'>Nombre de la aula: </b>".utf8_encode($mostrar['nombre_material'])."";
+                        echo "<br/><img src='img/material/".$mostrar['id_material'].".jpg'/><br/><br/>";
+                        echo "<a class='clasedeA' href='productosliberar.php?$mostrar[disponible]& id_material=$mostrar[id_material]'> Liberar </a>    <br/>";
+                        echo "<hr><br/>";
+                    }
+
+                }
+                   
             ?>
         	</section>
         </main>

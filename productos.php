@@ -107,7 +107,7 @@ if(isset($_REQUEST['opciones'])){
                         if(!$mostrar['disponible']){
                                 echo "<img src='img/ok.png' alt='Ok' title='Ok' />";
                                 echo "<br/><img src='img/material/".$mostrar['id_material'].".jpg'/><br/><br/>";
-                                 echo "<a class='clasedeA' href='productosproc.php?disponible=$mostrar[disponible]& id_material=$mostrar[id_material]'> Reservar </a><br/>";
+                                 echo "<a class='clasedeA' href='productosreserva.php?disponible=$mostrar[disponible]& id_material=$mostrar[id_material]'> Reservar </a><br/>";
                             }else {
                               echo "<img src='img/ko.png' alt='Ko' title='Ko' />";
                               echo "<br/><img src='img/material/".$mostrar['id_material'].".jpg'/><br/><br/>";
