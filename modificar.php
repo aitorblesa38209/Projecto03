@@ -56,7 +56,7 @@ $sql = "SELECT * FROM tbl_usuaris WHERE id_usuari=$_REQUEST[id_usuari]";
       if(mysqli_num_rows($datos)>0){
         $prod=mysqli_fetch_array($datos);
         ?>
-          <form name="formulario1" action="modificar.proc.php" method="get">
+          <form name="formulario1" action="modificarproc.php" method="get">
           <input type="hidden" name="id" value="<?php echo $prod['id_usuari']; ?>"><br/>
           Nombre:
           <input type="text" name="nom" size="20" maxlength="25" value="<?php echo $prod['nom_usuari']; ?>"><br/>

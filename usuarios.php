@@ -49,7 +49,7 @@ $sql = "SELECT tbl_usuaris.nom_usuari, tbl_usuaris.email_usuari, tbl_tipo_usuari
       </header>
       <div id="barraNegraDatos">
          <div id="barraOpciones">
-            <form action="" method="get">
+            <form action="insertar.php" method="get">
             <input type="submit" name="name" class="form2" value="Añadir Usuario">
          </div>
       </div>
@@ -79,8 +79,8 @@ $sql = "SELECT tbl_usuaris.nom_usuari, tbl_usuaris.email_usuari, tbl_tipo_usuari
                     echo "$mostrar[nom_usuari]";
                     echo "</td><td>$mostrar[email_usuari]</td>";
                     echo "</td><td>$mostrar[tipus_usuari]</td>";
-                    echo "<td><a href='modificar.php?id_usuari=$mostrar[id_usuari]'><i style='color: white;' class='fa fa-pencil fa-2x fa-pull-left fa-border'       title='modificar'></a></i>
-                              <i style='color: white;' class='fa fa-trash fa-2x fa-pull-left fa-border' title='borrar'></i>";
+                    echo "<td><a href='modificar.php?id_usuari=$mostrar[id_usuari]'><i style='color: white;' class='fa fa-edit fa-2x fa-pull-left fa-border' title='modificar'></a></i>
+                              <a href='eliminarproc.php?id_usuari=$mostrar[id_usuari]'><i style='color: white;' class='fa fa-trash fa-2x fa-pull-left fa-border' title='borrar'></a></i>";
                     echo "</td></tr>";
 
                 }
