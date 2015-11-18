@@ -68,7 +68,7 @@ $sql = "SELECT tbl_usuaris.nom_usuari, tbl_usuaris.email_usuari, tbl_tipo_usuari
               <tr>
                 <th>Nombre</th>
                 <th>Email</th>
-                <th>Tipo</th>
+                <th>Nivel Usuario</th>
                 <th>Operaciones</th>
               </tr>
               <?php

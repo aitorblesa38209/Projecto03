@@ -49,7 +49,7 @@ $sql = "SELECT * FROM tbl_usuaris WHERE id_usuari=$_REQUEST[id_usuari]";
       </header>
       
         <main>
-        <h1 class="titulo">Modificar</h1>
+        <h1 class="titulo">Modificar Usuario</h1>
         	<section class="formulario">
           <?php
             $datos = mysqli_query($conexion, $sql);
@@ -60,9 +60,9 @@ $sql = "SELECT * FROM tbl_usuaris WHERE id_usuari=$_REQUEST[id_usuari]";
           <input type="hidden" name="id" value="<?php echo $prod['id_usuari']; ?>"><br/>
           Nombre:
           <input type="text" name="nom" size="20" maxlength="25" value="<?php echo $prod['nom_usuari']; ?>"><br/>
-          Email:
+          Email:&nbsp;&nbsp;&nbsp;
           <input type="text" name="email" size="20" maxlength="25" value="<?php echo $prod['email_usuari']; ?>"><br/><br/>
-          Tipo:
+          Tipo Usuario:
           <select name="tipo" class="formul">
                 
                 
@@ -75,13 +75,17 @@ $sql = "SELECT * FROM tbl_usuaris WHERE id_usuari=$_REQUEST[id_usuari]";
                   //mientras por cada dato en el array $query
                   while ($Opciones = mysqli_fetch_array($query)) {
                   //crea una opción en el dato extraido de la base de datos
-                  echo "<option value=$Opciones[id_tipo_usuari]>$Opciones[tipus_usuari]</option>";
+                  echo "<option value=$Opciones[id_tipo_usuari]";
+                  if($Opciones['id_tipo_usuari']==$prod['id_tipo_usuari']){
+                            echo " selected";
+                        }
+                    echo ">$Opciones[tipus_usuari]</option>";
                   }
                 ?>
               </select>
         <br/>
         <input type="submit" class="form2" value="Guardar">
-        <a href="productos.php" class="form2">Volver</a>
+        <a href="usuarios.php" class="form2">Volver</a>
         </form>
         <?php
       } 
