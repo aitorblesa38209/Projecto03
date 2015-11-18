@@ -7,7 +7,7 @@ if(empty($_SESSION['login_user'])){
 //conexión a la base de datos
 $conexion = mysqli_connect('localhost','root','','bd_botiga_reserva_mejora');
 //Sentencia para mostrar todos los materiales de la tabla tbl_material
-$sql = "SELECT tbl_usuaris.nom_usuari, tbl_usuaris.email_usuari, tbl_tipo_usuari.tipus_usuari FROM tbl_usuaris INNER JOIN tbl_tipo_usuari ON tbl_tipo_usuari.id_tipo_usuari = tbl_usuaris.id_tipo_usuari";
+$sql = "SELECT tbl_usuaris.nom_usuari, tbl_usuaris.email_usuari, tbl_tipo_usuari.tipus_usuari, tbl_usuaris.id_usuari FROM tbl_usuaris INNER JOIN tbl_tipo_usuari ON tbl_tipo_usuari.id_tipo_usuari = tbl_usuaris.id_tipo_usuari";
 ?>
 <!--INICIO WEB -->
 <!DOCTYPE html>
@@ -54,9 +54,10 @@ $sql = "SELECT tbl_usuaris.nom_usuari, tbl_usuaris.email_usuari, tbl_tipo_usuari
          </div>
       </div>
         <main>
+        <h1 class="titulo">Administrar Usuarios</h1>
         	<section>
             <!-- PARTE DONDE SE VA A MOSTRAR LA INFORMACIÓN -->
-             <h1 class="titulo">Administrar Usuarios</h1>
+             
             <?php
             //echo $sql;
             //consulta de datos según el filtrado
@@ -78,7 +79,7 @@ $sql = "SELECT tbl_usuaris.nom_usuari, tbl_usuaris.email_usuari, tbl_tipo_usuari
                     echo "$mostrar[nom_usuari]";
                     echo "</td><td>$mostrar[email_usuari]</td>";
                     echo "</td><td>$mostrar[tipus_usuari]</td>";
-                    echo "<td><i style='color: white;' class='fa fa-pencil fa-2x fa-pull-left fa-border' title='modificar'></i>
+                    echo "<td><a href='modificar.php?id_usuari=$mostrar[id_usuari]'><i style='color: white;' class='fa fa-pencil fa-2x fa-pull-left fa-border'       title='modificar'></a></i>
                               <i style='color: white;' class='fa fa-trash fa-2x fa-pull-left fa-border' title='borrar'></i>";
                     echo "</td></tr>";
 

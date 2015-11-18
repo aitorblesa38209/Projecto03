@@ -74,8 +74,7 @@ if(isset($_REQUEST['opciones'])){
            <form action="productos.php" method="get">
              <select name="opciones" class="formul">
                <option value="" disabled selected>Filtrar por...</option>
-                <!--el valor "" (vacío) quiere decir que al no seleccionar ningun filtro, a la hora de buscar mostraremos todos los campos del tipo material-->
-               <?php
+                <?php
                   //Rellenar datos del SELECT con los datos de la base de datos
                   $sqlTipo = "SELECT * FROM tbl_tipo_material";
                   //consulta del select
