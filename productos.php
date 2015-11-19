@@ -13,15 +13,7 @@ $conexion = mysqli_connect('localhost','root','','bd_botiga_reserva_mejora') or 
 //Sentencia para mostrar todos los materiales de la tabla tbl_material
 $sql = "SELECT tbl_material.id_material, tbl_material.nombre_material, tbl_material.id_tipo_material, tbl_material.disponible, tbl_material.incidencia
         FROM tbl_material";
-
-
-
-        //relacion de todas las tablas
-        // INNER JOIN tbl_tipo_material ON tbl_tipo_material.id_tipo_material = tbl_tipo_material.id_tipo_material
-        // INNER JOIN tbl_reservas ON tbl_reservas.id_material = tbl_material.id_material
-        // INNER JOIN tbl_usuari ON tbl_usuari.id_usuari = tbl_reservas.id_usuari
-        // INNER JOIN tbl_tipo_usuari ON tbl_tipo_usuari.id_tipo_usuari = tbl_usuari.id_tipo_usuari";
-     
+    
 
 //comprobación si está instanciada la variable opciones (viene de un select de filtrado en el formulario de cabecera)
 if(isset($_REQUEST['opciones'])){
@@ -62,9 +54,30 @@ if(isset($_REQUEST['opciones'])){
           </figure>
           <nav>
             <ul>
-              <li>INICIO</li>
-              <a href="mis_reservas.php"><li>RESERVAS</li></a>
-              <a href="usuarios.php"><li>USUARIOS</li></a>
+            <?php
+
+            $sql2 = "SELECT * FROM tbl_usuaris WHERE id_usuari = $_SESSION[login_user]";
+            $datos2 = mysqli_query($conexion,$sql2);
+              $mostrar2 = mysqli_fetch_array($datos2);
+             switch ($mostrar2['id_tipo_usuari']) {
+                case 1:
+                echo "<li>INICIO</li>
+                      <a href='mis_reservas.php'><li>RESERVAS</li></a>";
+                break;
+
+                case 2:
+                echo "<li>INICIO</li>
+                      <a href='mis_reservas.php'><li>RESERVAS</li></a>
+                      <a href='usuarios.php'><li>USUARIOS</li></a>";
+                break;
+
+                case 3:
+                echo "<li>INICIO</li>
+                      <a href='mis_reservas.php'><li>RESERVAS</li></a>
+                      <a href='usuarios.php'><li>USUARIOS</li></a>";
+                break;
+              }
+            ?>
             </ul>
           </nav>
         </section>

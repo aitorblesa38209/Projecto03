@@ -69,13 +69,10 @@ if(empty($_SESSION['login_user'])){
         $datos = mysqli_query($conexion,$sql);
         $datos2 = mysqli_query($conexion,$sql2);
         $mostrar2 = mysqli_fetch_array($datos2);
+          
         while ($mostrar = mysqli_fetch_array($datos)) {
-        switch ($mostrar2['id_tipo_usuari']) {
-
-                case 1:
-                    header("location: productos.php");
-                break;
-
+        	switch ($mostrar2['id_tipo_usuari']) {
+                
                 case 2:
                     echo "<tr><td>";
                     echo "$mostrar[nom_usuari]";
@@ -95,9 +92,7 @@ if(empty($_SESSION['login_user'])){
                     echo "</td></tr>";
                 break;
             }
-                  
-         // echo "Tu nivel de usuario es $mostrar[tipus_usuari]"; 
-            }    
+        }    
                   
             ?>
             <br/>
