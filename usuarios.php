@@ -5,9 +5,7 @@ if(empty($_SESSION['login_user'])){
     header('location: index.php');
   }
 //conexión a la base de datos
-$conexion = mysqli_connect('localhost','root','','bd_botiga_reserva_mejora');
-//Sentencia para mostrar todos los materiales de la tabla tbl_material
-$sql = "SELECT tbl_usuaris.nom_usuari, tbl_usuaris.email_usuari, tbl_tipo_usuari.tipus_usuari, tbl_usuaris.id_usuari FROM tbl_usuaris INNER JOIN tbl_tipo_usuari ON tbl_tipo_usuari.id_tipo_usuari = tbl_usuaris.id_tipo_usuari";
+
 ?>
 <!--INICIO WEB -->
 <!DOCTYPE html>
@@ -55,26 +53,39 @@ $sql = "SELECT tbl_usuaris.nom_usuari, tbl_usuaris.email_usuari, tbl_tipo_usuari
       </div>
         <main>
         <h1 class="titulo">Administrar Usuarios</h1>
-        	<section>
+            <section>
             <!-- PARTE DONDE SE VA A MOSTRAR LA INFORMACIÓN -->
-             
-            <?php
-            //echo $sql;
-            //consulta de datos según el filtrado
-              $datos = mysqli_query($conexion,$sql);
-              ?>
-
-              <table border bordercolor=black>
+             <table border bordercolor=black>
               <tr>
                 <th>Nombre</th>
                 <th>Email</th>
                 <th>Nivel Usuario</th>
                 <th>Operaciones</th>
               </tr>
-              <?php
-           
-              
-                while ($mostrar = mysqli_fetch_array($datos)) {
+        <?php
+        $conexion = mysqli_connect('localhost','root','','bd_botiga_reserva_mejora');
+        $sql = "SELECT * FROM tbl_usuaris INNER JOIN tbl_tipo_usuari ON tbl_tipo_usuari.id_tipo_usuari = tbl_usuaris.id_tipo_usuari";
+        $sql2 = "SELECT * FROM tbl_usuaris WHERE id_usuari = $_SESSION[login_user]";
+        $datos = mysqli_query($conexion,$sql);
+        $datos2 = mysqli_query($conexion,$sql2);
+        $mostrar2 = mysqli_fetch_array($datos2);
+        while ($mostrar = mysqli_fetch_array($datos)) {
+        switch ($mostrar2['id_tipo_usuari']) {
+
+                case 1:
+                    header("location: productos.php");
+                break;
+
+                case 2:
+                    echo "<tr><td>";
+                    echo "$mostrar[nom_usuari]";
+                    echo "</td><td>$mostrar[email_usuari]</td>";
+                    echo "</td><td>$mostrar[tipus_usuari]</td>";
+                    echo "<td><a href='modificar.php?id_usuari=$mostrar[id_usuari]'><i style='color: white;' class='fa fa-edit fa-2x fa-pull-left fa-border' title='modificar'></a></i>";
+                    echo "</td></tr>";
+                break;
+
+                case 3:
                     echo "<tr><td>";
                     echo "$mostrar[nom_usuari]";
                     echo "</td><td>$mostrar[email_usuari]</td>";
@@ -82,14 +93,18 @@ $sql = "SELECT tbl_usuaris.nom_usuari, tbl_usuaris.email_usuari, tbl_tipo_usuari
                     echo "<td><a href='modificar.php?id_usuari=$mostrar[id_usuari]'><i style='color: white;' class='fa fa-edit fa-2x fa-pull-left fa-border' title='modificar'></a></i>
                               <a href='eliminarproc.php?id_usuari=$mostrar[id_usuari]'><i style='color: white;' class='fa fa-trash fa-2x fa-pull-left fa-border' title='borrar'></a></i>";
                     echo "</td></tr>";
-
-                }
+                break;
+            }
+                  
+         // echo "Tu nivel de usuario es $mostrar[tipus_usuari]"; 
+            }    
+                  
             ?>
             <br/>
             </table>
             </div>
            
-        	</section>
+            </section>
         </main>
     </body>
 </html>

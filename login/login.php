@@ -21,14 +21,13 @@ $password = $_REQUEST['pass'];
 $conexion = mysqli_connect('localhost', 'root', '', 'bd_botiga_reserva_mejora');//Consulta sql para usuario y password
 $sql = "SELECT * FROM tbl_usuaris WHERE email_usuari='$username' AND pass_usuari='$password'";
 $datos = mysqli_query($conexion,$sql);
-// $sql2 = "SELECT id_usuario FROM tbl_usuario";
-// $idusername = mysqli_query($conexion,$sql2);
 
 //Comprobamos si existe una linea y creamos la sesion
 if (mysqli_num_rows($datos) == 1) {
 	$pro = mysqli_fetch_array($datos);
 	$idusername=$pro['id_usuari'];
-
+	$nivel_usuario=$pro['id_tipo_usuari'];
+	$_SESSION['nivel_usuario'] = $nivel_usuario;
 	$_SESSION['login_user'] = $idusername; //Inicializamos la sesion
 	echo "$_SESSION";
 	header('location:./productos.php'); //Llevamos al usuario a su perfil con su sesion

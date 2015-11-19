@@ -14,6 +14,8 @@ $conexion = mysqli_connect('localhost','root','','bd_botiga_reserva_mejora') or 
 $sql = "SELECT tbl_material.id_material, tbl_material.nombre_material, tbl_material.id_tipo_material, tbl_material.disponible, tbl_material.incidencia
         FROM tbl_material";
 
+
+
         //relacion de todas las tablas
         // INNER JOIN tbl_tipo_material ON tbl_tipo_material.id_tipo_material = tbl_tipo_material.id_tipo_material
         // INNER JOIN tbl_reservas ON tbl_reservas.id_material = tbl_material.id_material
@@ -95,8 +97,10 @@ if(isset($_REQUEST['opciones'])){
           
             <!-- PARTE DONDE SE VA A MOSTRAR LA INFORMACIÓN -->
             <?php
+            
             //consulta de datos según el filtrado
                 $datos = mysqli_query($conexion,$sql);
+                
                 //si se devuelve un valor diferente a 0 (hay datos)
                 if(mysqli_num_rows($datos)!=0){
                     while ($mostrar = mysqli_fetch_array($datos)) {   
@@ -106,7 +110,12 @@ if(isset($_REQUEST['opciones'])){
                         if(!$mostrar['disponible']){
                                 echo "<img src='img/ok.png' alt='Ok' title='Ok' />";
                                 echo "<br/><img src='img/material/".$mostrar['id_material'].".jpg'/><br/><br/>";
+                                ?>
+                                <input type="date" class="form2" value="<?php echo date('Y-m-d'); ?>" />
+                                <input type="time" class="form2" name="hora">
+                                <?php
                                 echo "<a class='form2' href='productosreserva.php?disponible=$mostrar[disponible]& id_material=$mostrar[id_material]'> Reservar </a><br/>";
+
                             }else {
                               echo "<img src='img/ko.png' alt='Ko' title='Ko' />";
                               echo "<br/><img src='img/material/".$mostrar['id_material'].".jpg'/><br/><br/>";
