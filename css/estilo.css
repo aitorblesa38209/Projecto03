@@ -317,10 +317,11 @@ a{
 		width: 100%;
 		text-align: center;
 		border: 1px;
+		height: 400px;
 	}
 
 	table tr td{
-		color: black;
+		color: black;;;
 	}
 
 	#info{

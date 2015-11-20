@@ -74,22 +74,49 @@ if(empty($_SESSION['login_user'])){
         	switch ($mostrar2['id_tipo_usuari']) {
                 
                 case 2:
+                if ($mostrar['tipus_usuari']== "Root"){
                     echo "<tr><td>";
+                    echo "$mostrar[nom_usuari]";
+                    echo "</td><td>$mostrar[email_usuari]</td>";
+                    echo "</td><td>$mostrar[tipus_usuari]</td>";
+                    echo "<td>";
+                    echo "</td></tr>";
+                }elseif ($mostrar['tipus_usuari']== "Usuario"){
+                	echo "<tr><td>";
+                    echo "$mostrar[nom_usuari]";
+                    echo "</td><td>$mostrar[email_usuari]</td>";
+                    echo "</td><td>$mostrar[tipus_usuari]</td>";
+                    echo "<td><a href='modificar.php?id_usuari=$mostrar[id_usuari]'><i style='color: white;' class='fa fa-edit fa-2x fa-pull-left fa-border' title='modificar'></a></i>
+                    		<a href='eliminarproc.php?id_usuari=$mostrar[id_usuari]'><i style='color: white;' class='fa fa-trash fa-2x fa-pull-left fa-border' title='borrar'></a></i>";
+                    echo "</td></tr>";
+                }else{
+                	echo "<tr><td>";
+                    echo "$mostrar[nom_usuari]";
+                    echo "</td><td>$mostrar[email_usuari]</td>";
+                    echo "</td><td>$mostrar[tipus_usuari]</td>";
+                    echo "<td><a href='modificar.php?id_usuari=$mostrar[id_usuari]'><i style='color: white;' class='fa fa-edit fa-2x fa-pull-left fa-border' title='modificar'></a></i>
+                    		";
+                    echo "</td></tr>";
+                }
+                break;
+
+                case 3:
+                if ($mostrar['tipus_usuari']== "Root"){
+                	echo "<tr><td>";
                     echo "$mostrar[nom_usuari]";
                     echo "</td><td>$mostrar[email_usuari]</td>";
                     echo "</td><td>$mostrar[tipus_usuari]</td>";
                     echo "<td><a href='modificar.php?id_usuari=$mostrar[id_usuari]'><i style='color: white;' class='fa fa-edit fa-2x fa-pull-left fa-border' title='modificar'></a></i>";
                     echo "</td></tr>";
-                break;
-
-                case 3:
-                    echo "<tr><td>";
+                }else{
+                	echo "<tr><td>";
                     echo "$mostrar[nom_usuari]";
                     echo "</td><td>$mostrar[email_usuari]</td>";
                     echo "</td><td>$mostrar[tipus_usuari]</td>";
                     echo "<td><a href='modificar.php?id_usuari=$mostrar[id_usuari]'><i style='color: white;' class='fa fa-edit fa-2x fa-pull-left fa-border' title='modificar'></a></i>
                               <a href='eliminarproc.php?id_usuari=$mostrar[id_usuari]'><i style='color: white;' class='fa fa-trash fa-2x fa-pull-left fa-border' title='borrar'></a></i>";
                     echo "</td></tr>";
+                }    
                 break;
             }
         }    

@@ -38,9 +38,31 @@ $conexion = mysqli_connect('localhost','root','','bd_botiga_reserva_mejora') or 
           </figure>
           <nav>
             <ul>
-              <a href="productos.php"><li>INICIO</li></a>
-              <li>RESERVAS</li>
-               <a href="usuarios.php"><li>USUARIOS</li></a>
+             <?php
+
+            $sql2 = "SELECT * FROM tbl_usuaris WHERE id_usuari = $_SESSION[login_user]";
+            $datos2 = mysqli_query($conexion,$sql2);
+              $mostrar2 = mysqli_fetch_array($datos2);
+             switch ($mostrar2['id_tipo_usuari']) {
+                case 1:
+                echo "<a href='productos.php'><li>INICIO</li></a>
+                      <li>RESERVAS</li>";
+                break;
+
+                case 2:
+                echo "<a href='productos.php'><li>INICIO</li></a>
+                      <li>RESERVAS</li>
+                      <a href='usuarios.php'><li>USUARIOS</li></a>";
+                break;
+
+                case 3:
+                echo "<a href='productos.php'><li>INICIO</li></a>
+                      <li>RESERVAS</li>
+                      <a href='usuarios.php'><li>USUARIOS</li></a>";
+                break;
+              }
+            ?>
+             
             </ul>
           </nav>
         </section>
